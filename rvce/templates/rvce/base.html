@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+		<title>Results :: RVCE</title>
+		{% load staticfiles %}
+
+		<link href="{% static 'css/materialize.min.css' %}" rel="stylesheet" type="text/css"> 
+		<link href="{% static 'css/styles.min.css' %}" rel="stylesheet" type="text/css"> 
+		{% block cssimport %}
+		{% endblock %}
+	</head>
+
+	<body>
+
+		<ul id="dropdown_branches" class="dropdown-content">
+			<li><a href="#!">All</a></li>
+			<li class="divider"></li>
+			<li><a href="#!">CSE</a></li>
+			<li><a href="#!">Mech</a></li>
+			<li><a href="#!">IEM</a></li>
+		</ul>
+
+		<nav>
+			<div class="container">
+		    	<div class="nav-wrapper">
+		      		<a href="{% url 'rvce:index' %}" class="brand-logo">RVCE - Results</a>
+		      		<a href="#" data-activates="mobile-toggle" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+
+		      		
+		      		<ul id="nav-right" class="right hide-on-med-and-down">
+		      			<li>
+		      				<a href="{% url 'rvce:stats' %}">
+		      					<i class="mdi-editor-insert-chart left"></i>
+		      					Stats
+		      				</a>
+		      			</li>
+		      			<li>
+		      				<a href="{% url 'rvce:search' %}">
+		      					<i class="mdi-action-search left"></i>
+		      					Search Name
+		      				</a>
+					    </li>
+		      		</ul>
+		      		</form>
+		      		<ul id="mobile-toggle" class="side-nav">
+		      			<li>
+		      				<a href="{% url 'rvce:search' %}">
+		      					<i class="mdi-action-search left"></i>
+		      					Search Name
+		      				</a>
+					    </li>						    
+					    <li>
+		      				<a href="{% url 'rvce:stats' %}">
+		      					<i class="mdi-editor-insert-chart left"></i>
+		      					Stats
+		      				</a>
+		      			</li>
+		      		</ul>
+		      	</div>
+
+
+		    </div>
+	    </nav>
+
+	    {% block content %}
+	    {% endblock %}
+
+	    
+	</body>
+
+	<script src="{% static 'js/jquery.min.js' %}"></script>
+	<script src="{% static 'js/materialize.min.js' %}"></script>
+	{% block jsimport %}
+	{% endblock %}
+	
+	<script type="text/javascript">
+	$( document ).ready(function(){
+		 $(".button-collapse").sideNav();
+		  $('select').material_select();
+	})
+	</script>
+</html>

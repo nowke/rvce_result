@@ -1,0 +1,87 @@
+{% extends "rvce/base.html" %}
+{% block content %}
+
+<div class="row" style="margin-top:10px;">
+	<div class="col l8 s12 m8 offset-l2 offset-m2">
+	  {% if sub_stat_dict %}
+		<div class="row">
+		 {% for subcode,desc in sub_stat_dict.items %}
+			<div class="col s12 m12 l12" style="padding:0px;">
+				<h5> <strong>{{ desc.title }}</strong> [{{ subcode }}] </h5>
+				<canvas id="subChart{{forloop.counter}}" class="chart"></canvas>
+				<div class="divider"></div>
+			</div>
+		 {% endfor %}
+		</div>
+	  {% else %}
+	  	<div class="card-panel white margin-top">
+	  		<div class="row" style="margin-bottom:0;">
+	     		<div class="col l12">
+     				<p class="flow-text error_p">Stat not found!</p>
+	     		</div>
+	     	</div>
+	  	</div>
+	  {% endif %}
+
+	</div>
+	
+</div>
+{% endblock %}
+
+{% block jsimport %}
+{% load staticfiles %}
+<script src="{% static 'js/Chart.min.js' %}"></script>
+<script>
+	Chart.defaults.global.responsive = true;
+	Chart.defaults.global.maintainAspectRatio = true;
+	Chart.defaults.global.animation = false;
+
+	var colors = {
+		'S': "#00c853",
+		'A': "#03a9f4",
+		'B': "#673ab7",
+		'C': "#e91e63",
+		'D': "#009688",
+		'E': "#18ffff",
+		'F': "#8bc34a",
+		'X': "#ffc107",
+		'NSSR': "#795548",
+		'NSAR': "#607d8b",
+		'I': "#212121",
+		'Ab': "#f44336",
+		'W': "#ff5722"
+	};
+
+	var highlights = {
+		'S': "#00e676",
+		'A': "#29b6f6",
+		'B': "#7e57c2",
+		'C': "#ec407a",
+		'D': "#26a69a",
+		'E': "#84ffff",
+		'F': "#9ccc65",
+		'X': "#ffca28",
+		'NSSR': "#8d6e63",
+		'NSAR': "#78909c",
+		'I': "#424242",
+		'Ab': "#ef5350",
+		'W': "#ff7043"
+	};
+
+	{% for subcode,desc in  sub_stat_dict.items %}
+		var ctx{{forloop.counter}} = document.getElementById("subChart{{forloop.counter}}").getContext("2d");
+		var data{{forloop.counter}} = [
+			{% for grade,gradeCount in desc.stat.items %}
+				{
+					value: {{ gradeCount }},
+					color: colors['{{ grade }}'],
+					highlight: highlights['{{ grade }}'],
+					label: "{{ grade }}"
+				},
+			{% endfor %}
+		]
+		var myPieChart{{forloop.counter}} = new Chart(ctx{{forloop.counter}}).Pie(data{{forloop.counter}});
+	{% endfor %}
+
+</script>
+{% endblock %}

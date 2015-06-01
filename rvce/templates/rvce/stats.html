@@ -1,0 +1,88 @@
+{% extends "rvce/base.html" %}
+{% block content %}
+
+<div class="row" style="margin-top:10px;">
+	<div class="col l8 s12 m8 offset-l2 offset-m2">
+
+			<!--<canvas id="myChart" width="400" height="400"></canvas>-->
+		<ul class="collapsible popout" data-collapsible="accordion">
+		    <li>
+		    	<div class="collapsible-header active">
+		      		<i class="mdi-social-school"></i>Subject Stats
+		      	</div>
+		      	<div class="collapsible-body">
+		      		<div class="row" style="margin-top:5px;">
+		      			<div class="col l2 m3 s6">
+		      				<p style="padding-bottom:0; padding-top:15px;">Semester</p>
+		      			</div>
+		      			<div class="col l2 m3 s6">
+				      		<select class="browser-default" name="semester" id="semester">
+				      			{% for i in "xxxxxxxx" %}
+				      			<option>{{ forloop.counter }}</option>
+				      			{% endfor %}
+				      		</select>
+		      			</div>
+		      		</div>
+		      		<div class="row">
+		      			<div class="col l12">
+		      				<p style="padding-top:0;padding-bottom:0;">Select Dept</p>
+		      			</div>
+		      		</div>
+
+		      		<div class="row">
+		      	   	   {% for dept in depts %}
+		      			<div class="col l2 m4 s6" style="padding-left:20px;padding-right:20px;">
+			      			<input class="with-gap red" name="group1" type="radio" id="sub_dept{{ forloop.counter }}" style="padding-left:5px;" onclick="submit_sub_dept('{{ dept |lower |slice:':3' }}');">
+	      					<label for="sub_dept{{ forloop.counter }}" class="label-margined">{{ dept }}</label>
+      				   </div>
+      				  {% endfor %}
+		      		</div>
+		      	</div>
+		    </li>
+		    <li>
+		    	<div class="collapsible-header">
+		    		<i class="mdi-social-location-city"></i> Dept. Stats
+		    	</div>
+		    	<div class="collapsible-body">
+		    		<div class="row" style="margin-top:5px;">
+		      			<div class="col l2 m3 s6">
+		      				<p style="padding-bottom:0; padding-top:15px;">Semester</p>
+		      			</div>
+		      			<div class="col l2 m3 s6">
+				      		<select class="browser-default" name="semester" id="semester_dept">
+				      			<option>All</option>
+				      			{% for i in "xxxxxxxx" %}
+				      			<option>{{ forloop.counter }}</option>
+				      			{% endfor %}
+				      		</select>
+		      			</div>
+		      			<div class="col l2 m3 s6">
+		      				<button class="btn waves-effect waves-light" onclick="submit_dept();" name="action" style="margin-left:2rem;">Go
+    							<i class="mdi-content-send right"></i>
+  							</button>
+		      			</div>
+		      		</div>
+		    	</div>
+		    </li>
+		    
+		</ul>
+	</div>
+</div>
+
+
+{% endblock %}
+
+{% block jsimport %}
+<script>
+	// Submit forms
+	function submit_sub_dept(dept) {
+		var sem = document.getElementById("semester").value;
+		window.location = "{% url 'rvce:stats' %}sub/" + dept + "/" + sem + "/";
+	}
+
+	function submit_dept() {
+		var sem = document.getElementById("semester_dept").value;
+		window.location = "{% url 'rvce:stats' %}dept/" + sem + "/";
+	}
+</script>
+{% endblock %}

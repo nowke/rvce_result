@@ -1,0 +1,52 @@
+{% extends "rvce/base.html" %}
+{% block content %}
+
+<div class="row" style="margin-top:10px;">
+	<div class="col l8 s12 m8 offset-l2 offset-m2">
+	  {% if dept_dict %}
+		<p> Avg SGPA : Semester - <strong>{{ sem }}</strong> </p>
+		<canvas id="deptChart"></canvas>
+	  {% else %}
+	    <div class="card-panel white margin-top">
+	  		<div class="row" style="margin-bottom:0;">
+	     		<div class="col l12">
+ 				<p class="flow-text error_p">Semester not found!</p>
+	     		</div>
+	     	</div>
+	  	</div>
+	  {% endif %}
+	</div>
+</div>
+
+{% endblock %}
+
+{% block jsimport %}
+{% load staticfiles %}
+<script src="{% static 'js/Chart.min.js' %}"></script>
+<script src="{% static 'js/Chart.HorizontalBar.js' %}"></script>
+
+<script>
+	Chart.defaults.global.responsive = true;
+	Chart.defaults.global.animation = false;
+	Chart.defaults.global.maintainAspectRatio = true;
+	Chart.defaults.global.scaleBeginAtZero = false;
+
+	var ctx = document.getElementById("deptChart").getContext("2d");
+
+	var data = {
+		labels: [{% for dept in dept_dict %}"{{ dept }}",{% endfor %}],
+		datasets: [
+			{
+				label: "SGPA",
+				fillColor: "rgba(151,187,205,0.5)",
+            	strokeColor: "rgba(151,187,205,0.8)",
+            	highlightFill: "rgba(151,187,205,0.75)",
+            	highlightStroke: "rgba(151,187,205,1)",
+            	data: [{% for dept, sgpa in dept_dict.items %}{{ sgpa }},{% endfor %}]     	
+			}
+		]
+	};
+
+	var myBarChart = new Chart(ctx).HorizontalBar(data, {scaleBeginAtZero : false, barDatasetSpacing : 5});
+</script>
+{% endblock %}

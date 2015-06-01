@@ -1,0 +1,84 @@
+{% extends "rvce/base.html" %}
+{% block content %}
+
+<div class="row">
+	<div class="col l6 s12 m8 offset-l3 offset-m2">
+
+
+		<div class="card-panel white margin-top card-search">
+			<form method="post">
+			{% csrf_token %}
+			<div class="row" style="margin-bottom:0;"> 
+				<div class="input-field col l6 m9 s8">
+		          <i class="mdi-action-account-circle prefix"></i>
+		          <input id="icon_prefix" type="text" name="searchName" value="{{ search_query }}">
+		          <label for="icon_prefix">Name</label>
+		        </div>
+
+		        <div class="input-field col l6 m3 s1">
+		        	<button class="btn waves-effect waves-light" type="submit" name="action">Go
+	    				<i class="mdi-content-send right"></i>
+	  				</button>
+	  			</div>
+	  		</div>
+	  		<div class="row">
+		        <div class="input-field col l6 s12 m6" style="margin-top:0;">
+		        	<p>Select Branch</p>
+		        	<select class="browser-default" name="stud_dept">
+					    <option{{ selected.0 }}>All</option>
+					    <option{{ selected.1 }}>Biotech</option>
+					    <option{{ selected.2 }}>Chemical</option>
+					    <option{{ selected.3 }}>Civil</option>
+					    <option{{ selected.4 }}>CSE</option>
+					    <option{{ selected.5 }}>EEE</option>
+					    <option{{ selected.6 }}>ECE</option>
+					    <option{{ selected.7 }}>IEM</option>
+					    <option{{ selected.8 }}>ISE</option>
+					    <option{{ selected.9 }}>IT</option>
+					    <option{{ selected.10 }}>Mechanical</option>
+					    <option{{ selected.11 }}>Telecom</option>
+					</select>
+		        </div>
+
+	        </div>
+		    </form>
+
+	        {% if search_results %}
+			<ul class="collection with-header">
+				<li class="collection-header">
+					<h5>
+						{{ search_results | length }} Result(s) found for <strong>"{{ search_query }}"</strong>! 
+					</h5>
+				</li>
+				{% for item in search_results %}
+				<li class="collection-item" onclick="submit_form({{forloop.counter}});">
+					<div>
+
+						<span class="title">
+							<h5 class="no-margin-bottom"> 
+								<strong>{{ item.result_name }}</strong> <small> {{ item.result_usn }}</small>
+							</h5>
+						</span>
+					    <p style="margin-top:0;">{{ item.result_branch }}</p>
+					</div>
+				</li>
+				<form action="{% url 'rvce:index' %}" method="post" id="sform{{ forloop.counter }}">
+					{% csrf_token %}
+					<input type="text" name="stud_usn" style="display:none;" value="{{ item.result_usn |slice:'3:' }}">
+				</form>
+
+				{% endfor %}				
+			</ul>
+			{% endif %}
+		</div>
+	</div>
+</div> 
+
+<script type="text/javascript">
+	function submit_form(index) {
+		formId = "sform" + index.toString();
+		document.getElementById(formId).submit();
+	}
+</script>
+
+{% endblock %}

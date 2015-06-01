@@ -1,0 +1,17 @@
+{% extends "rvce/base.html" %}
+{% block content %}
+
+<div class="row">
+	<div class="col l6 s12 m8 offset-l3 offset-m2">
+		<div class="card-panel white margin-top">
+			<h1> Populate DB </h1>
+			<form action="" method="post" enctype="multipart/form-data">
+				{% csrf_token %}
+				<input type="file" name="file">
+				<input type="submit" value="Upload">
+			</form>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

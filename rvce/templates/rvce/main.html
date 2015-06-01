@@ -1,0 +1,81 @@
+{% extends "rvce/base.html" %}
+{% block content %}
+	
+<div class="row">
+	<div class="col l6 s12 m8 offset-l3 offset-m2">
+		<div class="card-panel white margin-top">
+			<h1>Quick Results</h1>
+			<div class="row">
+				<form action="" method="POST">
+				{% csrf_token %}
+					<div class="input-field col l6 m9 s8 input-field-usn">
+			    	    <h5 class="prefix color-white">1RV</h5>
+			        	<input id="input_usn" type="text" class="input-usn" name="stud_usn" value="{{ entered_usn }}">
+			        	<label for="input_usn">USN</label>
+			        </div>
+			        <div class="col l6 m3 s1 margin-top-small">
+			        	<button class="btn waves-effect waves-light" type="submit" name="action">Go
+	    					<i class="mdi-content-send right"></i>
+	  					</button>
+			        </div>
+		        </form>
+	        </div>
+
+	     {% if not stud_details and not front_page %}
+	     	<div class="row" style="margin-bottom:0;">
+	     		<div class="col l12">
+     				<p class="flow-text error_p">USN <strong>"1RV{{ entered_usn }}"</strong> Not found!</p>
+	     		</div>
+	     	</div>
+	     {% endif %}
+
+	     {% if stud_details %}
+
+	        <div class="row" style="margin-bottom:0;">
+	        	<div class="section">
+					<h5>
+						<strong>{{ stud_details.result_name }}</strong> 
+						<small>[{{ stud_details.result_branch }}]</small>
+					</h5>
+				</div>
+	        	<div class="divider"></div>
+	        </div>
+
+	        <div class="row">
+	        	<div class="col l6" style="padding:0;">
+	        		<h4>
+	        			{{ stud_details.result_sgpa }}
+	        			<small class="xs-small">SGPA</small>
+	        		</h4>
+	        	</div>	        	
+	        	<div class="col l6">
+	        		<h4>
+	        			{{ stud_details.result_sem }}
+	        			<small class="xs-small">Semester</small>
+	        		</h4>
+	        	</div>
+	        </div>
+
+	        <table class="hoverable">
+	        	<thead>
+	        		<tr>
+	        			<th data-field="subject-name">Subject [Code]</th>
+	        			<th data-field="subject-grade">Grade</th>
+	        		</tr>
+	        	</thead>
+	        	<tbody>
+	        		{% for sub in stud_details.result_sub %}
+	        		<tr>
+	        			<td>{{ sub.sub_title }} [{{ sub.sub_code }}]</td>
+	        			<td>{{ sub.sub_grade }}</td>
+	        		</tr>
+	        		{% endfor %}
+	        	</tbody>
+	        </table>
+
+	      {% endif %}
+		</div>
+	</div>
+</div>
+
+{% endblock %}
