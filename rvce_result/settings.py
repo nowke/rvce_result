@@ -23,11 +23,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = "7q6pw#e^oa7b@ccturt2w&%x)e_+zsfr&hd-2c_n&kgtrth67t"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = False
+DEBUG = True
+# DEBUG = False
 
-# TEMPLATE_DEBUG = True
-TEMPLATE_DEBUG = False
+TEMPLATE_DEBUG = True
+# TEMPLATE_DEBUG = False
 
 
 # Application definition
@@ -79,17 +79,17 @@ WSGI_APPLICATION = 'rvce_result.wsgi.application'
 
 # Database'
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-DATABASES = {}
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'rvcedb',
-#         'USER': 'nowke',
-#         'PASSWORD': 'aliasnav9',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
-# }
+# DATABASES = {}
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'rvcedb',
+        'USER': 'nowke',
+        'PASSWORD': 'aliasnav9',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -102,10 +102,10 @@ USE_TZ = True
 
 
 # Parse database configuration from $DATABASE_URL
-DATABASES['default'] =  dj_database_url.config()
+# DATABASES['default'] =  dj_database_url.config()
 
 # Enable Connection Pooling (if desired)
-DATABASES['default']['ENGINE'] = 'django_postgrespool'
+# DATABASES['default']['ENGINE'] = 'django_postgrespool'
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
