@@ -1,6 +1,6 @@
 {
   "name": "rvce_result",
-  "version": "1.0",
+  "version": "1.0.0",
   "description": "RVCE Results",
   "main": "manage.py",
   "scripts": {

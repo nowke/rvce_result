@@ -84,8 +84,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'rvcedb',
-        'USER': 'nowke',
-        'PASSWORD': 'aliasnav9',
+        'USER': 'myuser',
+        'PASSWORD': 'mypass',
         'HOST': 'localhost',
         'PORT': '5432',
     }
